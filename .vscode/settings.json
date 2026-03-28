@@ -1,0 +1,9 @@
+"emmet.includeLanguages": {
+    "twig": "html"
+},
+"emmet.triggerExpansionOnTab": true,
+"html-css-support.enabledLanguages": [
+    "html",
+    "twig",
+    "php"
+]
