@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zut ! Une erreur est survenue{% endblock %}
+
+{% block body %}
+
+{# Accès à la page 404 en mode dev: https://localhost:8000/_error/404 #}
+
+<div class="text-center">
+    <h1>Zut ! Les hautes herbes sont bien vides ici...</h1>
+
+    <a class="btn btn-primary" href="{{ path('app_dashboard') }}">Retourner à l'accueil</a>
+
+    <img class="w-100" src="{{ asset('images/404.png') }}" alt="page 404">
+</div>
+
+{% endblock %}

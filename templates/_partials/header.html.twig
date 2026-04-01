@@ -1,6 +1,9 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
-        <div class="container d-flex align-items-center"> <a class="navbar-brand p-0" href="#"> <img class="logoNav" src="{{ asset('images/logoBlc.png') }}" alt="Logo Nid'Help">
+        <div class="container d-flex align-items-center"> 
+        
+            <a class="navbar-brand p-0" href="{{ path('app_home') }}"> 
+                <img class="logoNav" src="{{ asset('images/logoBlc.png') }}" alt="Logo Nid'Help">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
@@ -8,8 +11,12 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center"> <li class="nav-item">
-                        <a class="nav-link active" href="#">Services</a>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center"> 
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('app_home') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Services</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Comment ça marche</a>

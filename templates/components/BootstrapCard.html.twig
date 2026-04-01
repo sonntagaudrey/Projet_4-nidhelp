@@ -1,0 +1,17 @@
+<div{{ attributes }}>
+    <div class="card">
+        <img src="{{ this.img }}" class="card-img-top" alt="Image">
+        <div class="card-body">
+            <h5 class="card-title">{{ this.title }}</h5>
+
+            {% block content %}{% endblock %}
+
+            <twig:BootstrapButton class="mt-2"
+                text="{{ this.label }}"
+                type="primary" link="{{ this.link }}" />
+        </div>
+    </div>
+</div>
+
+
+

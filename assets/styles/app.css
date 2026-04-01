@@ -30,16 +30,27 @@ h3 {
     color: var(--color-primary);
 }
 
-/* Personnalisation des boutons Bootstrap avec tes couleurs */
+/* Boutons */
 .btn-primary {
     background-color: var(--color-primary) !important;
     border-color: var(--color-primary) !important;
     font-family: var(--font-heading);
     border-radius: var(--border-radius);
 }
-
+.btn-primary:hover {
+    background-color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    filter: brightness(0.9);
+    opacity: 0.9; /
+}
 .btn-outline-primary {
     color: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    border-radius: var(--border-radius);
+}
+.btn-outline-primary:hover {
+    background-color: var(--color-primary) !important;
+    color: #fff !important; 
     border-color: var(--color-primary) !important;
 }
 
@@ -58,18 +69,14 @@ footer {
     background-color: var(--color-accent) !important; 
     padding: 0.8rem 0; 
 }
-
-
 .logoNav {
     height: 80px; 
     width: auto;
     transition: transform 0.3s ease;
 }
-
 .logoNav:hover {
     transform: scale(1.1);
 }
-
 .navbar-dark .navbar-nav .nav-link {
     color: rgba(255, 255, 255, 0.85) !important; 
     font-family: var(--font-heading); 
@@ -79,14 +86,12 @@ footer {
     transition: color 0.3s ease;
     border-bottom: 2px solid transparent; 
 }
-
 .navbar-dark .navbar-nav .nav-link:hover, 
 .navbar-dark .navbar-nav .nav-link.active {
     color: var(--color-white) !important;
     border-bottom-color: var(--color-white); 
 }
-
-/* Container de recherche */
+    /* Barre de recherche */
 .search-box {
     position: relative;
     display: flex;
@@ -97,13 +102,11 @@ footer {
     padding: 4px 15px;
     transition: all 0.3s ease;
 }
-
 .search-box:focus-within {
     background: rgba(255, 255, 255, 0.2);
     border-color: var(--color-primary); 
     box-shadow: 0 0 10px rgba(41, 121, 207, 0.2);
 }
-
 .search-input {
     background: transparent;
     border: none;
@@ -113,12 +116,9 @@ footer {
     outline: none;
     width: 180px;
 }
-
-
 .search-input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
-
 .search-btn {
     background: transparent;
     border: none;
@@ -128,24 +128,20 @@ footer {
     opacity: 0.7;
     transition: opacity 0.3s;
 }
-
 .search-btn:hover {
     opacity: 1;
 }
 
 /* Footer */
-
 .footer-site {
     background-color: var(--color-accent); 
     color: var(--color-white);
     font-family: var(--font-body);
 }
-
 .footer-logo {
     height: 100px; 
     width: auto;
 }
-
 .footer-link {
     color: rgba(255, 255, 255, 0.8) !important;
     text-decoration: none;
@@ -153,27 +149,22 @@ footer {
     display: inline-block;
     margin-bottom: 10px;
     padding-bottom: 2px;
-    /* On prépare la bordure invisible pour éviter les sauts au survol */
     border-bottom: 2px solid transparent; 
     transition: border-color 0.3s ease, color 0.3s ease;
 }
-
 .footer-link:hover {
     color: var(--color-white) !important;
     border-bottom-color: var(--color-white);
 }
-
 .footer-bottom {
     background-color: rgba(0, 0, 0, 0.2); 
     font-size: 0.85rem;
 }
-
 .social-icons i {
     font-size: 1.2rem;
     cursor: pointer;
     transition: color 0.3s;
 }
-
 .social-icons i:hover {
     color: var(--color-primary);
 }

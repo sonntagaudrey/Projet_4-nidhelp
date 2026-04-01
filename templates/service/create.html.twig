@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un Pokémon{% endblock %}
+
+{% block body %}
+
+<div class="row justify-content-center">
+
+    <div class="col-12 col-md-6 col-lg-5">
+
+        <div class="card shadow-sm">
+
+            <div class="card-header bg-danger text-white">
+                <h3>Ajouter une prestation / un service</h3>
+            </div>
+
+            <div class="card-body">
+                
+                {{ form(createForm) }}
+                
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

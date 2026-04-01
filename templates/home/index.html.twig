@@ -11,10 +11,12 @@
 <div class="example-wrapper">
     <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/sonnt/Documents/NidHelp/Synfony/nidhelp_webapp/src/Controller/HomeController.php</code></li>
-        <li>Your template at <code>C:/Users/sonnt/Documents/NidHelp/Synfony/nidhelp_webapp/templates/home/index.html.twig</code></li>
-    </ul>
+    <twig:BootstrapButton class="my-2"
+        text="Bootstrap est disponible!"
+        type="primary" link="#" outlined/>
+        
+        <twig:BootstrapButton class="my-2"
+        text="Bootstrap est disponible!"
+        type="primary" link="#" />
 </div>
 {% endblock %}
