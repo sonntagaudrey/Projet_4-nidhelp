@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 #[ORM\Table(name: 'services')]
+#[ORM\HasLifecycleCallbacks]
 class Service
 {
     #[ORM\Id]
@@ -27,6 +28,11 @@ class Service
     #[ORM\Column(name: 'srv_update_date',nullable: true)]
     private ?\DateTime $updateDate = null;
 
+    public function __construct()
+    {
+        $this->createDate = new \DateTime();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -63,7 +69,7 @@ class Service
 
     public function setCreateDate(\DateTime $createDate): static
     {
-        $this->createDate = $createDate;
+        $this->createDate = new \DateTime();
 
         return $this;
     }
@@ -75,7 +81,7 @@ class Service
 
     public function setUpdateDate(?\DateTime $updateDate): static
     {
-        $this->updateDate = $updateDate;
+        $this->updateDate = new \DateTime();
 
         return $this;
     }

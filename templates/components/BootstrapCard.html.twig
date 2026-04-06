@@ -1,17 +1,21 @@
-<div{{ attributes }}>
-    <div class="card">
-        <img src="{{ this.img }}" class="card-img-top" alt="Image">
-        <div class="card-body">
-            <h5 class="card-title">{{ this.title }}</h5>
+{# templates/components/BootstrapCard.html.twig #}
+<div class="card h-100 border"> {# 'border' active le contour gris par défaut de Bootstrap #}
+    {% if this.img %}
+        <img src="{{ this.img }}" class="card-img-top border-bottom" alt="{{ this.name }}" style="height: 180px; object-fit: cover;">
+    {% endif %}
 
-            {% block content %}{% endblock %}
-
-            <twig:BootstrapButton class="mt-2"
-                text="{{ this.label }}"
-                type="primary" link="{{ this.link }}" />
+    <div class="card-body d-flex flex-column">
+        <h5 class="card-title fw-bold text-dark">{{ this.name }}</h5>
+        <p class="card-text text-muted flex-grow-1" style="font-size: 0.9rem;">
+            {{ this.description }}
+        </p>
+        
+        <div class="d-flex gap-2 mt-3">
+            {% for action in this.actions %}
+                <a href="{{ action.link }}" class="btn btn-{{ action.type }} btn-sm px-3">
+                    {{ action.label }}
+                </a>
+            {% endfor %}
         </div>
     </div>
 </div>
-
-
-

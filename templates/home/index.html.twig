@@ -3,20 +3,59 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    <twig:BootstrapButton class="my-2"
-        text="Bootstrap est disponible!"
-        type="primary" link="#" outlined/>
-        
-        <twig:BootstrapButton class="my-2"
-        text="Bootstrap est disponible!"
-        type="primary" link="#" />
+<!--section Hero--> 
+<div class="hero-section text-white d-flex align-items-center">
+    <div class="container text-center py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <h1 class="display-3 fw-bold mb-3 mt-5">Bienvenue sur <span class="text-white">Nid'Help</span></h1>
+                <p class="lead mb-5 opacity-90">
+                    La plateforme solidaire d'entraide entre voisins. 
+                    Besoin d'un coup de main ou envie d'aider ? Vous êtes au bon endroit.
+                </p>
+                <div class="d-flex justify-content-center gap-3 mb-5">
+                    
+                    <twig:BootstrapButton 
+                        text="Découvrir les services" 
+                        type="primary" 
+                        link="{{ path('app_service_index') }}" 
+                    />
+                    
+                    <twig:BootstrapButton 
+                        text="Proposer mon aide" 
+                        type="light" 
+                        link="{{ path('app_service_create') }}" 
+                        :outlined="true"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<div class="container py-3">
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 text-center">
+        <div class="col">
+            <div class="card h-100 shadow-sm p-3 border-0"> 
+                <h2 class="fs-4 text-primary">Confiance</h2>
+                <p>Une communauté de voisins vérifiés pour une entraide en toute sécurité.</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm p-3 border-0">            
+                <h2 class="fs-4 text-primary">Solidarité</h2>
+                <p>Renforcez les liens dans votre quartier en rendant service simplement.</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card h-100 shadow-sm p-3 border-0">
+                <h2 class="fs-4 text-primary">Rapidité</h2>
+                <p>Trouvez une solution à votre problème à deux pas de chez vous.</p>
+            </div>
+        </div>
+</div>
+
 {% endblock %}

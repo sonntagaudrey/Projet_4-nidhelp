@@ -1,9 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des Pokémons{% endblock %}
+{% block title %}Nos Services - Nid'Help{% endblock %}
 
 {% block body %}
+<div class="container py-4"> {# Ajout d'un container et de padding vertical #}
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2 text-dark">Nos Services</h1>
+        <twig:BootstrapButton 
+            text="Ajouter une prestation"
+            type="primary" 
+            link="{{ path('app_service_create')}}" 
+            outlined
+        />
+    </div>
 
-    {{ dump(serviceList) }}
-
+    <div class="row g-4">
+        {% for service in serviceList %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <twig:BootstrapCard 
+                    name="{{ service.name }}"
+                    img="" 
+                    description="{{ service.description }}"
+                    :actions="[
+                        { label: 'Détails', link: path('app_service_show', { id: service.id }), type: 'outline-primary' },
+                        { label: 'Modifier', link: path('app_service_update', { id: service.id }), type: 'primary'}
+                    ]"
+                />
+            </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

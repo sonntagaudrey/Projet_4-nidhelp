@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+{% form_theme createForm 'bootstrap_5_layout.html.twig' %}
+{% block title %}Ajouter une prestation{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-header bg-white"> 
+                    <h3 class="mb-0 text-primary">
+                        {{ createForm.vars.value.id is null ? 'Ajouter' : 'Modifier' }} une prestation
+                    </h3>
+                </div>
+
+                <div class="card-body p-4">
+                    {{ form_start(createForm) }}
+                        
+                        
+                        {{ form_widget(createForm) }}
+
+                        <div class="d-grid gap-2 mt-4">
+                            
+                            <a href="{{ path('app_service_index') }}" class="btn btn-link">
+                                Annuler
+                            </a>
+                        </div>
+                        
+                    {{ form_end(createForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -33,7 +33,7 @@ h3 {
 /* Boutons */
 .btn-primary {
     background-color: var(--color-primary) !important;
-    border-color: var(--color-primary) !important;
+    border-color: var(--color-bg-ligh) !important;
     font-family: var(--font-heading);
     border-radius: var(--border-radius);
 }
@@ -68,6 +68,10 @@ footer {
 .navbar {
     background-color: var(--color-accent) !important; 
     padding: 0.8rem 0; 
+    position: fixed;
+    top: 0;    
+    width: 100%;
+    z-index: 99;
 }
 .logoNav {
     height: 80px; 
@@ -131,6 +135,53 @@ footer {
 .search-btn:hover {
     opacity: 1;
 }
+
+.form-control {
+    width: 100% !important;
+    display: block;
+}
+
+/* Section Hero */
+.hero-section {
+    background: #1E4D8A;
+    background: linear-gradient(181deg,rgba(30, 77, 138, 1) 31%, rgba(41, 121, 207, 1) 65%, rgba(225, 240, 255, 1) 100%);   
+    min-height: 60vh;
+    border-radius: 0 0 50px 50px;
+    margin-bottom: 2rem;
+}
+
+.hero-section h1 {
+    color: white !important; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.hero-section .lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+* On s'assure que la carte ne bouge plus */
+.card {
+    transition: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: 1px solid #dee2e6 !important; /* Couleur du contour Bootstrap */
+}
+
+/* On désactive explicitement le hover au cas où une autre règle existerait */
+.card:hover {
+    transform: none !important;
+    box-shadow: none !important;
+    background-color: #fff; /* Reste blanc */
+}
+
+
+.card:hover {
+    transform: translateY(-8px); 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important; 
+}
+
+
 
 /* Footer */
 .footer-site {
