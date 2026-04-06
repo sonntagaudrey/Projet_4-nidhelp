@@ -5,7 +5,7 @@
 {% block body %}
 
 <!--section Hero--> 
-<div class="hero-section text-white d-flex align-items-center">
+<section class="hero-section text-white d-flex align-items-center">
     <div class="container text-center py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -32,9 +32,9 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="container py-3">
+<section class="container py-3">
     <div class="row g-4 py-5 row-cols-1 row-cols-lg-3 text-center">
         <div class="col">
             <div class="card h-100 shadow-sm p-3 border-0"> 
@@ -56,6 +56,39 @@
                 <p>Trouvez une solution à votre problème à deux pas de chez vous.</p>
             </div>
         </div>
-</div>
+</section>
 
+<section class="container py-4">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+        <div>
+            <h2 class="fw-bold">Dernières prestations</h2>
+            <p class="text-muted">Découvrez les derniers services mis en ligne.</p>
+        </div>
+        <div>
+            <twig:BootstrapButton 
+                text="Tous nos services"
+                type="primary" 
+                link="{{ path('app_service_create')}}" 
+                outlined
+            />
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for service in lastServices %}
+            <div class="col-12 col-md-4">
+                <twig:BootstrapCard 
+                    name="{{ service.name }}"
+                    description="{{ service.description }}"
+                    img="" 
+                    :actions="[
+                        { label: 'Détails', link: path('app_service_show', { id: service.id }), type: 'outline-primary' }
+                    ]"
+                />
+            </div>
+        {% else %}
+            <p class="text-center">Aucun service n'a encore été ajouté.</p>
+        {% endfor %}
+    </div>
+</section>
 {% endblock %}
