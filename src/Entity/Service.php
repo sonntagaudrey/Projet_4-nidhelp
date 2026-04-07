@@ -28,6 +28,13 @@ class Service
     #[ORM\Column(name: 'srv_update_date',nullable: true)]
     private ?\DateTime $updateDate = null;
 
+    #[ORM\ManyToOne(inversedBy: 'availability')]
+    private ?Availability $availability = null;
+
+    #[ORM\ManyToOne(inversedBy: 'service')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     public function __construct()
     {
         $this->createDate = new \DateTime();
@@ -69,7 +76,7 @@ class Service
 
     public function setCreateDate(\DateTime $createDate): static
     {
-        $this->createDate = new \DateTime();
+        $this->createDate = $createDate;
 
         return $this;
     }
@@ -81,7 +88,31 @@ class Service
 
     public function setUpdateDate(?\DateTime $updateDate): static
     {
-        $this->updateDate = new \DateTime();
+        $this->updateDate = $updateDate;
+
+        return $this;
+    }
+
+    public function getAvailability(): ?Availability
+    {
+        return $this->availability;
+    }
+
+    public function setAvailability(?Availability $availability): static
+    {
+        $this->availability = $availability;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategories(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

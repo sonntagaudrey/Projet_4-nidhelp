@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Service;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -24,6 +25,12 @@ class ServiceCreateFormType extends AbstractType
                     'rows' => 10, 
                     'placeholder' => 'Décrivez ici les détails de la prestation...'
                 ]
+            ])
+             ->add('categories', EntityType::class, [
+                'label'         => "Catégorie",
+                'class'         => Category::class,  //< Classe utilisée pour les choix
+                'choice_label'  => 'name',              //< Attribut de l'objet utilisé pour le texte de l'option
+                'multiple'      => true,                //< Autorise la sélection multiple
             ])
 
             ->add('submit', SubmitType::class, [
