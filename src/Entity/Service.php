@@ -110,7 +110,7 @@ class Service
         return $this->category;
     }
 
-    public function setCategories(?Category $category): static
+    public function setCategory(?Category $category): static
     {
         $this->category = $category;
 

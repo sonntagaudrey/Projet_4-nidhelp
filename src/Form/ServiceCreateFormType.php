@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Service;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -30,7 +31,7 @@ class ServiceCreateFormType extends AbstractType
                 'label'         => "Catégorie",
                 'class'         => Category::class,  //< Classe utilisée pour les choix
                 'choice_label'  => 'name',              //< Attribut de l'objet utilisé pour le texte de l'option
-                'multiple'      => true,                //< Autorise la sélection multiple
+                'multiple'      => false,                //< N'Autorise pas la sélection multiple
             ])
 
             ->add('submit', SubmitType::class, [
