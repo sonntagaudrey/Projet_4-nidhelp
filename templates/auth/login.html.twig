@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - Nid'Help{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5"> 
+            
+            <div class="card shadow-sm border-0 mt-4">
+                <div class="card-body p-4 p-md-5">
+                    
+                    <div class="text-center mb-4">
+                        <h1 class="h3 fw-bold text-dark">Connexion</h1>
+                        <p class="text-muted">Ravi de vous revoir sur Nid'Help</p>
+                    </div>
+
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="alert alert-info mb-4" role="alert">
+                                Vous êtes connecté(e) en tant que <strong>{{ app.user.userIdentifier }}</strong>.<br>
+                                <a href="{{ logout_path() }}" class="alert-link">Me déconnecter</a>
+                            </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="username" class="form-label fw-bold">Adresse e-mail</label>
+                            <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control form-control-lg" autocomplete="email" placeholder="jean.peuplus@exemple.com" required autofocus>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label fw-bold">Mot de passe</label>
+                            <input type="password" name="_password" id="password" class="form-control form-control-lg" autocomplete="current-password" required>
+                        </div>
+                        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                        
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" type="submit">
+                                Se connecter
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <p class="text-muted">Vous n'avez pas encore de compte ? <a href="{{ path('app_register') }}" class="text-decoration-none">Inscrivez-vous ici</a>.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{# On utilise le thème Bootstrap 5 pour que le formulaire soit automatiquement beau #}
+{% form_theme categoryForm 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}Ajouter une catégorie - Nid'Help{% endblock %}
+
+{% block body %}
+<section class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2 text-dark">Ajouter une nouvelle catégorie</h1>
+        <twig:BootstrapButton 
+            text="Retour à la liste"
+            type="primary" 
+            link="{{ path('app_category')}}" 
+            outlined
+        />
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-lg-8 offset-lg-2">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    {{ form_errors(categoryForm) }}
+                    {{ form_start(categoryForm) }}
+                        
+                        <div class="mb-3">
+                            {{ form_row(categoryForm.name, {
+                                'label': 'Nom de la catégorie',
+                                'attr': {'placeholder': 'Ex: Ménage, Jardinage...'}
+                            }) }}
+                        </div>
+
+                        <div class="mb-4">
+                            {{ form_row(categoryForm.picture, {
+                                'label': 'Illustration (Image)',
+                                'attr': {'class': 'form-control'}
+                            }) }}
+                            <small class="text-muted">Format acceptés : JPG, PNG, WEBP. Max 2Mo.</small>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Créer la catégorie
+                            </button>
+                        </div>
+
+                    {{ form_end(categoryForm) }}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

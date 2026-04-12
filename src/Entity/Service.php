@@ -26,14 +26,15 @@ class Service
     private ?\DateTime $createDate = null;
 
     #[ORM\Column(name: 'srv_update_date',nullable: true)]
-    private ?\DateTime $updateDate = null;
+    private ?\DateTime $updateDate = null; 
 
-    #[ORM\ManyToOne(inversedBy: 'availability')]
-    private ?Availability $availability = null;
-
-    #[ORM\ManyToOne(inversedBy: 'service')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'services')] // Attention, tu avais 'service' au singulier, vérifie le mappedBy dans Category
+    #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'cat_id', nullable: false)]
     private ?Category $category = null;
+
+    #[ORM\ManyToOne(inversedBy: 'services')]
+    #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'usr_id', nullable: false)]
+    private ?User $author = null;
 
     public function __construct()
     {
@@ -93,18 +94,6 @@ class Service
         return $this;
     }
 
-    public function getAvailability(): ?Availability
-    {
-        return $this->availability;
-    }
-
-    public function setAvailability(?Availability $availability): static
-    {
-        $this->availability = $availability;
-
-        return $this;
-    }
-
     public function getCategory(): ?Category
     {
         return $this->category;
@@ -113,6 +102,18 @@ class Service
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }

@@ -54,6 +54,10 @@ h3 {
     border-color: var(--color-primary) !important;
 }
 
+.btn-warning, .btn-outline-warning, .btn-danger, .btn-outline-danger {
+    border-radius: var(--border-radius);
+}
+
 header {
     height: 100px;
 }
@@ -160,28 +164,12 @@ footer {
     font-weight: 300;
 }
 
-* On s'assure que la carte ne bouge plus */
 .card {
     transition: none !important;
     transform: none !important;
     box-shadow: none !important;
-    border: 1px solid #dee2e6 !important; /* Couleur du contour Bootstrap */
+    border: 1px solid #dee2e6 !important;
 }
-
-/* On désactive explicitement le hover au cas où une autre règle existerait */
-.card:hover {
-    transform: none !important;
-    box-shadow: none !important;
-    background-color: #fff; /* Reste blanc */
-}
-
-
-.card:hover {
-    transform: translateY(-8px); 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important; 
-}
-
-
 
 /* Footer */
 .footer-site {

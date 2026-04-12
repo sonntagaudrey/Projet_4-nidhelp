@@ -23,11 +23,11 @@ class ServiceCreateFormType extends AbstractType
             ->add('description', TextareaType::class,[
                 'label' => 'Description de votre prestation',
                 'attr' => [
-                    'rows' => 10, 
+                    'rows' => 20, 
                     'placeholder' => 'Décrivez ici les détails de la prestation...'
                 ]
             ])
-             ->add('categories', EntityType::class, [
+             ->add('category', EntityType::class, [
                 'label'         => "Catégorie",
                 'class'         => Category::class,  //< Classe utilisée pour les choix
                 'choice_label'  => 'name',              //< Attribut de l'objet utilisé pour le texte de l'option

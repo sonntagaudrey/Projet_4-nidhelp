@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% form_theme userForm 'bootstrap_5_layout.html.twig' %}
+{% block title %}Informations utilisateur{% endblock %}
+
+{% block body %}
+<div class="row my-5">
+    <h1 class="col-10">Gestion des utilisateurs</h1>
+
+    <twig:BootstrapButton class="col-2 text-align-end" type="primary" link="{{ path('app_dashboard') }}" text="Retour à la liste" outlined />
+</div>
+
+{% for message in app.flashes('danger') %}
+    <div class="alert alert-danger" role="alert">
+        {{ message }}
+    </div>
+{% endfor %}
+
+{{ form_errors(userForm) }}
+
+{{ form_start(userForm, {'attr': {'novalidate': 'novalidate'}}) }}
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            {{ form_row(userForm.firstname) }}
+        </div>
+        <div class="col-md-6 mb-3">
+            {{ form_row(userForm.name) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(userForm.address) }}
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            {{ form_row(userForm.postcode) }}
+        </div>
+        <div class="col-md-8 mb-3">
+            {{ form_row(userForm.town) }}
+        </div>
+    </div>
+
+    <div class="mb-3">
+        {{ form_row(userForm.phone) }}
+    </div>    
+
+    <div class="d-grid gap-2 mb-3">
+        <button type="submit" class="btn btn-primary btn-lg">
+            Enregistrer
+        </button>
+    </div>
+
+{{ form_end(userForm) }}
+
+{% endblock %}

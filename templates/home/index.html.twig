@@ -9,6 +9,7 @@
     <div class="container text-center py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8">
+                <img src="{{ asset('images/logoBlc.png') }}" alt="Logo Nid'Help">
                 <h1 class="display-3 fw-bold mb-3 mt-5">Bienvenue sur <span class="text-white">Nid'Help</span></h1>
                 <p class="lead mb-5 opacity-90">
                     La plateforme solidaire d'entraide entre voisins. 
@@ -21,13 +22,14 @@
                         type="primary" 
                         link="{{ path('app_service_index') }}" 
                     />
-                    
+                    {% if app.user %}
                     <twig:BootstrapButton 
                         text="Proposer mon aide" 
                         type="light" 
                         link="{{ path('app_service_create') }}" 
                         :outlined="true"
                     />
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -58,6 +60,7 @@
         </div>
 </section>
 
+<!--Section dernières prestations-->
 <section class="container py-4">
     <div class="d-flex justify-content-between align-items-end mb-4">
         <div>
@@ -68,7 +71,7 @@
             <twig:BootstrapButton 
                 text="Tous nos services"
                 type="primary" 
-                link="{{ path('app_service_create')}}" 
+                link="{{ path('app_service_index')}}" 
                 outlined
             />
         </div>
@@ -79,8 +82,8 @@
             <div class="col-12 col-md-4">
                 <twig:BootstrapCard 
                     name="{{ service.name }}"
-                    description="{{ service.description }}"
-                    img="" 
+                    description="{{ service.description|excerpt(100) }}"
+                    img="{{ service.category and service.category.picture ? asset('uploads/categories/' ~ service.category.picture) : '' }}" 
                     :actions="[
                         { label: 'Détails', link: path('app_service_show', { id: service.id }), type: 'outline-primary' }
                     ]"

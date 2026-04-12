@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme registrationForm 'bootstrap_5_layout.html.twig' %}
+
+{% block title %}Inscription - Nid'Help{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+            
+            <div class="card shadow-sm border-0 mt-4">
+                <div class="card-body p-4 p-md-5">
+                    
+                    <div class="text-center mb-4">
+                        <h1 class="h3 fw-bold text-dark">Créer un compte</h1>
+                        <p class="text-muted">Rejoignez la communauté Nid'Help</p>
+                    </div>
+
+                    {% for flash_error in app.flashes('verify_email_error') %}
+                        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                    {% endfor %}
+
+                    {{ form_errors(registrationForm) }}
+
+                    {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                                                
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form_row(registrationForm.firstname) }}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                {{ form_row(registrationForm.name) }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_row(registrationForm.address) }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                {{ form_row(registrationForm.postcode) }}
+                            </div>
+                            <div class="col-md-8 mb-3">
+                                {{ form_row(registrationForm.town) }}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_row(registrationForm.phone) }}
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form_row(registrationForm.email) }}
+                        </div>
+
+                        <div class="mb-4">
+                            {{ form_row(registrationForm.plainPassword) }}
+                        </div>
+
+                        <div class="mb-4 bg-light p-3 rounded">
+                            {{ form_row(registrationForm.agreeTerms) }}
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                S'inscrire
+                            </button>
+                        </div>
+                        
+                    {{ form_end(registrationForm) }}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

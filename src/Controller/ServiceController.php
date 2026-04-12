@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/service', name: 'app_service_')]
 final class ServiceController extends AbstractController
@@ -24,36 +25,41 @@ final class ServiceController extends AbstractController
     }
 
     #[Route('/create', name: 'create')]
+    #[IsGranted('ROLE_USER')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
     {
         $objNewService = new Service();
 
         $createForm = $this->createForm(ServiceCreateFormType::class, $objNewService);
 
-        // J'envoi les données de la requête au formulaire
+        // J'envoie les données de la requête au formulaire
         $createForm->handleRequest($request);
 
-        // Vérifie si le formulaire est soumi et que les données sont valides
+        // Vérifie si le formulaire est soumis et que les données sont valides
         if ($createForm->isSubmitted() && $createForm->isValid()) {
+
+            // récupère l'utilisateur connecté et on l'affecte au service
+            $objNewService->setAuthor($this->getUser());
+            // ----------------------------------
 
             $entityManager->persist($objNewService);
             $entityManager->flush();
 
             // Affiche un message de succès
-            $this->addFlash('success', "La prestation a bien été créé en base");
+            $this->addFlash('success', "La prestation a bien été créée en base");
 
-            // Redirige vers la page de détails de la prestation créé
+            // Redirige vers la page de détails de la prestation créée
             return $this->redirectToRoute('app_service_show', [
-                'id'    => $objNewService->getId()
+                'id' => $objNewService->getId()
             ]);
         }
 
         return $this->render('service/form.html.twig', [
-            'createForm'    => $createForm
+            'createForm' => $createForm
         ]);
     }
 
-     #[Route('/{id<\d+>}', name: 'show')]
+    #[Route('/{id<\d+>}', name: 'show')]
     public function show(Service $service): Response
     {
         return $this->render('service/show.html.twig', [
@@ -61,29 +67,59 @@ final class ServiceController extends AbstractController
         ]);
     }
 
-     #[Route('/{id<\d+>}/update', name: 'update')]
+    #[Route('/{id<\d+>}/update', name: 'update')]
     public function update(Service $service, Request $request, EntityManagerInterface $entityManager): Response
     {
+        //on sécurise seul un admin ou l'auteur du service peut faire la modification
+       if ($service->getAuthor() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) { 
+           $this->addFlash('danger', "Vous n'avez pas le droit de modifier cette prestation.");
+           return $this->redirectToRoute('app_service_index');
+        }           
+        
         // On construit le formulaire à partir des données de l'entité récupérée
         // depuis l'ID présent dans l'URL
         $updateForm = $this->createForm(ServiceCreateFormType::class, $service);
-
+        
         $updateForm->handleRequest($request);
 
         if($updateForm->isSubmitted() && $updateForm->isValid()) {
 
             $entityManager->flush();
 
-            $this->addFlash('success', "Le pokémon a bien été modifié en base");
+            $this->addFlash('success', "La prestation a bien été modifiée en base");
 
-            // Redirige vers la page de détails de la prestation modifiée
             return $this->redirectToRoute('app_service_show', [
                 'id' => $service->getId()
             ]);
         }
-
+        
         return $this->render('service/form.html.twig', [
             'createForm'    => $updateForm
         ]);
     }
+
+    #[Route('/{id<\d+>}/delete', name: 'delete', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function delete(Request $request, Service $service, EntityManagerInterface $entityManager): Response
+    {
+        
+        if ($service->getAuthor() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
+            $this->addFlash('danger', "Vous n'avez pas le droit de supprimer ce service.");
+            return $this->redirectToRoute('app_service_index');
+        }
+
+        $submittedToken = $request->getPayload()->get('_token');
+
+        if ($this->isCsrfTokenValid('delete' . $service->getId(), $submittedToken)) {
+            $entityManager->remove($service);
+            $entityManager->flush();
+            $this->addFlash('success', "Le service a été supprimé.");
+        } else {
+            $this->addFlash('danger', "Jeton de sécurité invalide.");
+        }
+
+        return $this->redirectToRoute('app_dashboard');
+    }
+
+
 }

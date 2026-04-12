@@ -1,0 +1,128 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\User;
+use App\Form\UserInfoFormType;
+use App\Repository\UserRepository;
+use DateTime;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Routing\Attribute\Route;
+
+final class UserController extends AbstractController
+{
+    #[Route('/user', name: 'app_user')]
+    public function index(UserRepository $userRepository): Response
+    {
+        $arrUsers = $userRepository->findAll();
+
+        return $this->render('user/index.html.twig', [
+            'userList' => $arrUsers
+        ]);
+    }
+
+    #[Route('/user/create', name: 'app_user_create')]
+    public function create(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    {
+        $objUser = new User();
+
+        $userForm = $this->createForm(UserInfoFormType::class, $objUser);
+
+        $userForm->handleRequest($request);
+        
+        if($userForm->isSubmitted() && $userForm->isValid()) {
+
+            /** @var string $plainPassword */
+            $plainPassword = $userForm->get('plainPassword')->getData();
+
+            // Dans le cas où le mot de passe n'est pas renseigné
+            if(!$plainPassword) {
+
+                $plainPassword = "default_password";
+            }
+
+            // encode the plain password
+            $objUser->setPassword($userPasswordHasher->hashPassword($objUser, $plainPassword));
+
+            // set the registration datetime
+            $objUser->setCreateDate(new DateTimeImmutable('now'));
+            
+            $entityManager->persist($objUser);
+            $entityManager->flush();
+
+            $this->addFlash('success', "L'utilisateur a été créé");
+
+            return $this->redirectToRoute('app_user');
+        }
+
+        return $this->render('user/form.html.twig', [
+            'userForm' => $userForm
+        ]);
+    }
+
+    #[Route('/user/{id<\d+>}', name: 'app_user_update')]
+    public function update(User $user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $userForm = $this->createForm(UserInfoFormType::class, $user);
+
+        $userForm->handleRequest($request);
+        
+        if($userForm->isSubmitted() && $userForm->isValid()) { 
+
+            $user->setUpdateDate(new DateTime('now'));
+            $entityManager->flush();
+
+            $this->addFlash('success', "L'utilisateur a été modifié");
+
+            return $this->redirectToRoute('app_dashoard');
+        }
+
+        return $this->render('user/form.html.twig', [
+            'userForm' => $userForm
+        ]);
+    }
+
+    #[Route('/user/{id<\d+>}/roles', name: 'app_user_roles')]
+    public function updateRoles(User $user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $strFormError = ""; //< Pas d'erreur par défaut (chaine vide)
+
+        if($request->isMethod('POST')) {
+
+            // Récupération du jeton CSRF dans la requête
+            $submittedToken = $request->getPayload()->get('_csrf_token');
+
+            // Vérifie si le jeton est valide : attention au nom qui doit être le mêmee que dans le dans le gabarit TWIG
+            if ($this->isCsrfTokenValid('user_role', $submittedToken)) {
+
+                $arrRoles = []; //< On défini un tableau de rôles vide avant la gestion des affectations
+
+                // Vérifie si la case du rôle prof est coché
+                if($request->request->get('user-role-admin')) {
+                    $arrRoles[] = 'ROLE_ADMIN';
+                }
+
+                // Met à jour les rôles de l'utilisateur
+                $user->setRoles($arrRoles);
+                $entityManager->flush();
+
+                $this->addFlash('success', "Les rôles de l'utilisateur ont été modifiés");
+
+                return $this->redirectToRoute('app_dashboard');
+            }
+
+            // En cas d'erreur de jeton CSRF, on pourra transmettre un message d'erreur à la vue TWIG
+            $strFormError = "Le jeton de sécurité n'est pas valide. Réessayez ou actualisez la page";
+        }
+
+        return $this->render('user/roles.html.twig', [
+            'user'      => $user,
+            'formError' => $strFormError
+        ]);
+    }
+}

@@ -12,10 +12,7 @@ class AppExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            // If your filter generates SAFE HTML, you should add a third
-            // parameter: ['is_safe' => ['html']]
-            // Reference: https://twig.symfony.com/doc/3.x/advanced.html#automatic-escaping
-            new TwigFilter('filter_name', [AppExtensionRuntime::class, 'doSomething']),
+            new TwigFilter('excerpt', [$this, 'createExcerpt']),
         ];
     }
 
@@ -24,5 +21,17 @@ class AppExtension extends AbstractExtension
         return [
             new TwigFunction('function_name', [AppExtensionRuntime::class, 'doSomething']),
         ];
+    }
+
+    /**
+     * Coupe un texte à une longueur donnée et ajoute un suffixe si nécessaire.
+     */
+    public function createExcerpt(string $text, int $length = 100, string $suffix = '...'): string
+    {
+        if (mb_strlen($text) <= $length) {
+            return $text;
+        }
+
+        return mb_substr($text, 0, $length) . $suffix;
     }
 }

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nos Catégories - Nid'Help{% endblock %}
+
+{% block body %}
+<section class="container py-4"> 
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h2 text-dark">Nos Catégories</h1>
+        <a href="{{ path('app_category_create') }}" class="btn btn-outline-primary">
+            Ajouter une catégorie
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for category in categoriesList %}
+            <div class="col-12 col-md-6 col-lg-4">
+                {# Début de la carte Bootstrap standard #}
+                <div class="card h-100 shadow-sm">
+                    
+                    {# Gestion de l'image #}
+                    {% if category.picture %}
+                        {# Si tu as configuré l'upload dans "public/uploads/categories" #}
+                        <img src="{{ asset('uploads/categories/' ~ category.picture) }}" class="card-img-top" alt="{{ category.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                        {# Image par défaut si aucune image n'est trouvée #}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <span class="text-muted">Aucune image</span>
+                        </div>
+                    {% endif %}
+
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-dark fw-bold mb-0">{{ category.name }}</h5>
+                    </div>
+
+                    <div class="card-footer bg-transparent border-top-0 pb-3 text-center">
+                        
+                        {# <a href="{{ path('app_category_update', { id: category.id }) }}" class="btn btn-primary w-100">
+                            Modifier
+                        </a> #}
+                    </div>
+                </div>
+                {# Fin de la carte #}
+            </div>
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info">Aucune catégorie n'a été trouvée.</div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
