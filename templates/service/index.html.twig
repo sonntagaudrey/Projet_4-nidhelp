@@ -20,6 +20,26 @@
         {% endif %}
     </div>
 
+
+
+
+    <div class="mb-4 d-flex flex-wrap gap-2">
+        <a href="{{ path('app_service_index') }}" 
+        class="btn btn-sm {{ app.request.query.get('category') ? 'btn-outline-primary' : 'btn-primary' }}">
+        Tous les services
+        </a>
+
+        {% for category in categoryList %}
+            <a href="{{ path('app_service_index', { 'category': category.id }) }}" 
+            class="btn btn-sm {{ app.request.query.get('category') == category.id ? 'btn-primary' : 'btn-outline-primary' }}">
+                {{ category.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+
+
+
     <div class="row g-4">
         {% for service in serviceList %}
         <div class="col-12 col-md-6 col-lg-4">
@@ -29,7 +49,7 @@
                 { label: 'Détails', link: path('app_service_show', { id: service.id }), type: 'primary' }
             ] %}
 
-            {% if app.user %}
+            {% if app.user == service.author %}
                 {% set cardActions = cardActions|merge([
                     { label: 'Modifier', link: path('app_service_update', { id: service.id }), type: 'outline-primary' }
                 ]) %}
@@ -37,11 +57,13 @@
 
             <twig:BootstrapCard 
                 name="{{ service.name }}"
+                categoryName="{{ service.category ? service.category.name : 'Divers' }}"
                 img="{{ service.category and service.category.picture ? asset('uploads/categories/' ~ service.category.picture) : '' }}" 
                 description="{{ service.description|excerpt(100) }}"
                 :actions="cardActions"
             />
-                        
+            
+            
         </div>
         {% endfor %}
     </div>

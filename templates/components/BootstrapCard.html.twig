@@ -16,5 +16,11 @@
                 </a>
             {% endfor %}
         </div>
+
+        {% if this.categoryName %}
+            <span class="badge bg-primary position-absolute mt-2 me-2 top-0 end-0 shadow-sm">
+                {{ this.categoryName }}
+            </span>
+        {% endif %}
     </div>
 </div>

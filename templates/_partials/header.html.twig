@@ -42,8 +42,8 @@
                         </li>
                     {% endif %}
                     <li class="nav-item ms-lg-4">
-                        <form class="search-box ms-lg-4" role="search">
-                            <input type="text" class="search-input" placeholder="Rechercher un service...">
+                        <form class="search-box ms-lg-4" role="search" method="get" action="{{ path('app_search')}}">
+                            <input type="text" class="search-input" placeholder="Rechercher un service..." name="search" id="search" value="{{ app.request.query.get('search') }}" >
                             <button type="submit" class="search-btn">
                                 <i class="bi bi-search"></i>
                             </button>

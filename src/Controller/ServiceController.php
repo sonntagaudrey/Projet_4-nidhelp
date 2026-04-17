@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Service;
 use App\Form\ServiceCreateFormType;
+use App\Repository\CategoryRepository;
 use App\Repository\ServiceRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,11 +25,17 @@ final class ServiceController extends AbstractController
      * @return Response La vue avec tous les services 
      */
     #[Route('/index', name: 'index')]
-    public function index(ServiceRepository $serviceRepository): Response
+    public function index(ServiceRepository $serviceRepository, CategoryRepository $categoryRepository, Request $request): Response
     {
-        $arrServices = $serviceRepository->findAll();
+        $categoryId = $request->query->get('category');
+        $search=$request->query->get('search');
+    
+        $arrServices = $serviceRepository->findAllFiltered($categoryId, $search);
+        $arrCategories= $categoryRepository->findAll();        
+
         return $this->render('service/index.html.twig', [
             'serviceList' => $arrServices,
+            'categoryList' => $arrCategories,
         ]);
     }
 

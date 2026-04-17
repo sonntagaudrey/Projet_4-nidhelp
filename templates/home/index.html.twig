@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil Nid'Help{% endblock %}
 
 {% block body %}
 
@@ -82,6 +82,7 @@
             <div class="col-12 col-md-4">
                 <twig:BootstrapCard 
                     name="{{ service.name }}"
+                    categoryName="{{ service.category ? service.category.name : 'Divers' }}"
                     description="{{ service.description|excerpt(100) }}"
                     img="{{ service.category and service.category.picture ? asset('uploads/categories/' ~ service.category.picture) : '' }}" 
                     :actions="[
@@ -111,7 +112,7 @@
                     description=""
                     img="{{ category.picture ? asset('uploads/categories/' ~ category.picture) : '' }}"
                     :actions="[
-                        { label: 'Voir la catégorie', link: '#', type: 'outline-primary' }
+                        { label: 'Voir la catégorie', link: path('app_service_index', { 'category': category.id }), type: 'outline-primary' }
                     ]"
                 />
             </div>
