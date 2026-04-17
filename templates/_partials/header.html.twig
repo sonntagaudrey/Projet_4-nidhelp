@@ -13,32 +13,32 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center"> 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_home') }}">Accueil</a>
+                        <a class="nav-link {{ app.request.attributes.get('_route') == 'app_home' ? 'active' : '' }}" href="{{ path('app_home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_service_index') }}">Services</a>
+                        <a class="nav-link {{ app.request.attributes.get('_route') == 'app_service_index' ? 'active' : '' }}" href="{{ path('app_service_index') }}">Services</a>
                     </li>
                    
                     {% if app.user %}     
                    
                         {% if is_granted('ROLE_ADMIN') %}
                         <li class="nav-item">
-                            <a href="{{ path('app_category_create') }}" class="nav-link">+ Ajouter une catégorie</a>
+                            <a class="nav-link {{ app.request.attributes.get('_route') == 'app_category_create' ? 'active' : '' }}" href="{{ path('app_category_create') }}">+ Ajouter une catégorie</a>
                         </li>
 
                         {% endif %}
                         <li class="nav-item">
-                            <a href="{{ path('app_dashboard') }}" class="nav-link">Mon espace</a>
+                            <a class="nav-link {{ app.request.attributes.get('_route') == 'app_dashboard' ? 'active' : '' }}" href="{{ path('app_dashboard') }}">Mon espace</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a>
+                            <a class="nav-link {{ app.request.attributes.get('_route') == 'app_logout' ? 'active' : '' }}" href="{{ path('app_logout') }}">Se déconnecter</a>
                         </li>
                         {% else %}
                         <li class="nav-item">
-                            <a href="{{ path('app_register') }}" class="nav-link">S'inscrire</a>
+                            <a class="nav-link {{ app.request.attributes.get('_route') == 'app_register' ? 'active' : '' }}" href="{{ path('app_register') }}">S'inscrire</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ path('app_login') }}" class="nav-link">Se connecter</a>
+                            <a class="nav-link {{ app.request.attributes.get('_route') == 'app_login' ? 'active' : '' }}" href="{{ path('app_login') }}">Se connecter</a>
                         </li>
                     {% endif %}
                     <li class="nav-item ms-lg-4">

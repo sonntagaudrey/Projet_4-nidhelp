@@ -1,7 +1,7 @@
 :root {
     /* Couleurs Primaires & Secondaires */
     --color-primary: #2979CF;
-    /* Bleu Nid'Help */
+    /* Bleu Nid'Help */    
     --color-accent: #1E4D8A;
     /* Bleu Accent */
     --color-bg-light: #E1F0FF;
@@ -56,6 +56,16 @@ h3 {
 
 .btn-warning, .btn-outline-warning, .btn-danger, .btn-outline-danger {
     border-radius: var(--border-radius);
+}
+
+.bg-primary{
+    background: var(--color-primary) !important;
+}
+.bg-light{
+    background: var(--color-bg-light) !important;
+}
+.text-primary{
+    color: var(--color-primary)!important;
 }
 
 header {
@@ -169,6 +179,11 @@ footer {
     transform: none !important;
     box-shadow: none !important;
     border: 1px solid #dee2e6 !important;
+}
+
+.card-img-top{
+    height: 350px; 
+    object-fit: cover;
 }
 
 /* Footer */

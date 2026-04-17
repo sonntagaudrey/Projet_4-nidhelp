@@ -11,9 +11,17 @@
     
     {# En-tête du Dashboard #}
     <div class="row mb-5">
-        <div class="col-12">
+        <div class="col-10">
             <h1 class="h2 fw-bold text-dark">Mon Tableau de Bord</h1>
-            <p class="text-muted">Bienvenue dans votre espace personnel, {{ app.user.firstname }}</p>
+            <p class="text-muted">Bienvenue dans votre espace personnel, <strong><span class="text-primary">{{ app.user.firstname }} {{ app.user.name }}</span></strong></p>
+        </div>
+        <div class="col-2">
+            <twig:BootstrapButton 
+                text="Ma page contact(s)"
+                type="primary" 
+                link="{{ path('app_exchange')}}" 
+                outlined
+            />
         </div>
     </div>
 
@@ -36,7 +44,7 @@
                         <twig:BootstrapButton 
                             text="Modifier mes informations"
                             type="primary" 
-                            link="#" 
+                            link="{{ path('app_user_update', {'id': app.user.id}) }}" 
                             outlined
                         />                           
                     </div>
@@ -50,7 +58,7 @@
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white border-bottom-0 pt-4 pb-0 d-flex justify-content-between align-items-center">
                     <h2 class="h5 fw-bold">Mes Services Proposés</h2>
-                    <a href="{{ path('app_category_create') }}" class="btn btn-primary btn-sm">Nouveau service</a>
+                    <a href="{{ path('app_service_create') }}" class="btn btn-primary btn-sm">Nouveau service</a>
                 </div>
                 
                 <div class="card-body">
@@ -100,8 +108,7 @@
                     {% else %}
 
                         <div class="text-center py-5 text-muted">                            
-                            <h5 class="fw-bold">Vous ne proposez aucun service</h5>
-                            <p>Commencez à générer des revenus en proposant vos compétences.</p>
+                            <h5 class="fw-bold">Vous ne proposez aucun service</h5>                            
 
                             <twig:BootstrapButton 
                                 text="Créer mon premier service"

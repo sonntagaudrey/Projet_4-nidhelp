@@ -12,9 +12,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+/**
+ * @author Audrey SONNTAG GOLINSKI
+ * Controller gérant l'affichage de la page service + CRUD des services.
+ */
+
 #[Route('/service', name: 'app_service_')]
 final class ServiceController extends AbstractController
 {
+    /**
+     * @return Response La vue avec tous les services 
+     */
     #[Route('/index', name: 'index')]
     public function index(ServiceRepository $serviceRepository): Response
     {
@@ -24,6 +32,9 @@ final class ServiceController extends AbstractController
         ]);
     }
 
+    /**
+     * @return Response La vue du formulaire de crétion d'un service
+     */
     #[Route('/create', name: 'create')]
     #[IsGranted('ROLE_USER')]
     public function create(Request $request, EntityManagerInterface $entityManager): Response
@@ -55,10 +66,13 @@ final class ServiceController extends AbstractController
         }
 
         return $this->render('service/form.html.twig', [
-            'createForm' => $createForm
+            'createForm' => $createForm->createView()
         ]);
     }
 
+    /**
+     * @return Response La vue d'un service
+     */
     #[Route('/{id<\d+>}', name: 'show')]
     public function show(Service $service): Response
     {
@@ -94,10 +108,14 @@ final class ServiceController extends AbstractController
         }
         
         return $this->render('service/form.html.twig', [
-            'createForm'    => $updateForm
+            'createForm'    => $updateForm->createView()
         ]);
     }
-
+    
+    /**
+     * Supprime un service
+     * @return Response renvoie sur la vue du Dashboard
+     */
     #[Route('/{id<\d+>}/delete', name: 'delete', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function delete(Request $request, Service $service, EntityManagerInterface $entityManager): Response

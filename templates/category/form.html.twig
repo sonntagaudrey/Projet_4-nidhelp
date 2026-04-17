@@ -8,7 +8,12 @@
 {% block body %}
 <section class="container py-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
+        {% if categoryForm.vars.value.id is null %}
         <h1 class="h2 text-dark">Ajouter une nouvelle catégorie</h1>
+        {% else %}
+        <h1 class="h2 text-dark">Modifier une catégorie</h1>
+        {% endif %}
+
         <twig:BootstrapButton 
             text="Retour à la liste"
             type="primary" 
@@ -25,10 +30,7 @@
                     {{ form_start(categoryForm) }}
                         
                         <div class="mb-3">
-                            {{ form_row(categoryForm.name, {
-                                'label': 'Nom de la catégorie',
-                                'attr': {'placeholder': 'Ex: Ménage, Jardinage...'}
-                            }) }}
+                            {{ form_row(categoryForm.name) }}
                         </div>
 
                         <div class="mb-4">
@@ -41,7 +43,7 @@
 
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-primary btn-lg">
-                                Créer la catégorie
+                                Enregistrer
                             </button>
                         </div>
 

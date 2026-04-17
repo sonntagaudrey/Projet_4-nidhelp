@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Répondre à {{ originalExchange.sender.firstname }}{% endblock %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h2 fw-bold">Conversation avec {{ originalExchange.sender.firstname }} </h1>
+                <a href="{{ path('app_dashboard') }}" class="btn btn-outline-primary">Retour à mes messages</a>
+            </div>
+
+            {# message reçu #}
+            <div class="card mb-4 bg-light border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h6 class=" pb-2">Message reçu de {{ originalExchange.sender.firstname }} {{ originalExchange.sender.name }}</h6>
+                        <a href="{{path('app_user_show', {'id': originalExchange.sender.id}) }}" class="btn btn-outline-primary">voir les coordonnées</a>
+                    </div>
+                    <p class="small text-muted mb-3">Le {{ originalExchange.createDate|date('d/m/Y à H:i') }}</p>
+                    <p class="fw-bold mb-1">Sujet : {{ originalExchange.object }}</p>
+                    <div class="p-3 bg-white rounded border">
+                        {{ originalExchange.message|nl2br }}
+                    </div>
+                </div>
+            </div>
+
+            {# formulaire de réponse #}
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Votre réponse</h5>
+                </div>
+                <div class="card-body">
+                    {{ form_start(replyForm) }}
+                        {{ form_row(replyForm.object) }}
+                        {{ form_row(replyForm.message) }}
+                        
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Envoyer la réponse</button>
+                        </div>
+                    {{ form_end(replyForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

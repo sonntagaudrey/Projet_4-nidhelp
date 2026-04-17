@@ -25,9 +25,9 @@
                 {# On vérifie si le rôle est déjà affecté à l'utilisateur ou non #}
                 {% if 'ROLE_ADMIN' in user.roles %} checked {% endif %}
 
-                name="user-role-prof" id="user-role-prof" />
+                name="user-role-admin" id="user-role-admin" />
 
-            <label class="form-check-label" for="user-role-prof">Administrateur</label>
+            <label class="form-check-label" for="user-role-admin">Administrateur</label>
         </div>
 
         {# Champ masqué pour le jeton CSRF - le nom "user_role" doit être le même que celui utilisé dans le contrôleur #}

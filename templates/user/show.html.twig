@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{# Correction ici : On utilise 'user' et non 'originalExchange' #}
+{% block title %}Profil de {{ user.firstname }} - Nid'Help{% endblock %}
+
+{% block body %}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h2 fw-bold text-dark">Coordonnées de {{ user.firstname }} {{ user.name }}</h1>
+                <a href="{{ path('app_exchange') }}" class="btn btn-outline-primary">
+                   Retour aux messages
+                </a>
+            </div>
+
+           <div class="card shadow border-0">
+                <div class="card-header bg-primary py-4 text-center">                    
+                    <h2 class="text-white mt-3 mb-0">{{ user.firstname }} {{ user.name|upper }}</h2>                    
+                </div>
+
+                <div class="card-body p-4">
+                    <h5 class="card-title mb-4 fw-bold text-secondary border-bottom pb-2">
+                        <i class="bi bi-person-lines-fill me-2"></i>Informations de contact
+                    </h5>
+
+                    <div class="row g-4">
+                        {# Email #}
+                        <div class="col-12">
+                            <label class="text-muted small d-block">Adresse e-mail</label>
+                            <div class="d-flex align-items-center mt-1">
+                                <i class="bi bi-envelope text-primary me-3 fs-4"></i>
+                                <a href="mailto:{{ user.email }}" class="text-decoration-none fw-medium">{{ user.email }}</a>
+                            </div>
+                        </div>
+
+                        {# Téléphone #}
+                        <div class="col-12">
+                            <label class="text-muted small d-block">Téléphone</label>
+                            <div class="d-flex align-items-center mt-1">
+                                <i class="bi bi-telephone text-primary me-3 fs-4"></i>
+                                <span class="fw-medium">
+                                    {{ user.phone }}
+                                </span>
+                            </div>
+                        </div>
+
+                        {# Localisation #}
+                        <div class="col-12">
+                            <label class="text-muted small d-block">Localisation</label>
+                            <div class="d-flex align-items-center mt-1">
+                                <i class="bi bi-geo-alt text-primary me-3 fs-4"></i>
+                                <span class="fw-medium">
+                                    {{ user.postcode }} {{ user.town }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

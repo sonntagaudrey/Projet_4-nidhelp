@@ -26,7 +26,7 @@ class Category
      * @var Collection<int, Service>
      */
     #[ORM\OneToMany(targetEntity: Service::class, mappedBy: 'category', orphanRemoval: true)]
-    private Collection $service;
+    private Collection $services;
 
     public function __construct()
     {
@@ -65,15 +65,15 @@ class Category
     /**
      * @return Collection<int, Service>
      */
-    public function getService(): Collection
+    public function getServices(): Collection
     {
-        return $this->service;
+        return $this->services;
     }
 
     public function addService(Service $service): static
     {
-        if (!$this->service->contains($service)) {
-            $this->service->add($service);
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
             $service->setCategory($this);
         }
 
@@ -82,7 +82,7 @@ class Category
 
     public function removeService(Service $service): static
     {
-        if ($this->service->removeElement($service)) {
+        if ($this->services->removeElement($service)) {
             // set the owning side to null (unless already changed)
             if ($service->getCategory() === $this) {
                 $service->setCategory(null);

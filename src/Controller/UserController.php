@@ -65,6 +65,17 @@ final class UserController extends AbstractController
         ]);
     }
 
+     /**
+     * @return Response La vue d'un user
+     */
+    #[Route('/{id<\d+>}', name: 'app_user_show')]
+    public function show(User $user): Response
+    {
+        return $this->render('user/show.html.twig', [
+            'user' => $user
+        ]);
+    }
+
     #[Route('/user/{id<\d+>}', name: 'app_user_update')]
     public function update(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -79,7 +90,7 @@ final class UserController extends AbstractController
 
             $this->addFlash('success', "L'utilisateur a été modifié");
 
-            return $this->redirectToRoute('app_dashoard');
+            return $this->redirectToRoute('app_dashboard');
         }
 
         return $this->render('user/form.html.twig', [
@@ -125,4 +136,6 @@ final class UserController extends AbstractController
             'formError' => $strFormError
         ]);
     }
+
+
 }

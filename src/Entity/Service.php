@@ -28,13 +28,15 @@ class Service
     #[ORM\Column(name: 'srv_update_date',nullable: true)]
     private ?\DateTime $updateDate = null; 
 
-    #[ORM\ManyToOne(inversedBy: 'services')] // Attention, tu avais 'service' au singulier, vérifie le mappedBy dans Category
+    #[ORM\ManyToOne(inversedBy: 'services')] 
     #[ORM\JoinColumn(name: 'category_id', referencedColumnName: 'cat_id', nullable: false)]
     private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'services')]
     #[ORM\JoinColumn(name: 'author_id', referencedColumnName: 'usr_id', nullable: false)]
     private ?User $author = null;
+
+    
 
     public function __construct()
     {

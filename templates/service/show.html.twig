@@ -11,7 +11,6 @@
     <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
             
-    
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h1 class="h2 fw-bold text-dark">Détails de la prestation</h1>
                 <twig:BootstrapButton 
@@ -27,8 +26,7 @@
                 {% if service.category and service.category.picture %}
                     <img src="{{ asset('uploads/categories/' ~ service.category.picture) }}" 
                          alt="{{ service.category.name }}" 
-                         class="card-img-top" 
-                         style="height: 350px; object-fit: cover;">
+                         class="card-img-top">
                 {% else %}
                     <div class="bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
                         <div class="text-muted text-center">
@@ -54,28 +52,47 @@
                     </p>
 
                     <hr class="my-4 text-muted">
-
-                    {# Actions (Syntaxe Twig corrigée, mais logique toujours vulnérable) #}
-                    {% if app.user %}
-                    <div class="d-flex justify-content-end gap-2">
-                        <twig:BootstrapButton 
-                            text="Modifier ce service"
-                            type="primary" 
-                            link="{{ path('app_service_update', {'id': service.id}) }}" 
-                        />
-                        <form method="post" action="{{ path('app_service_delete', {'id': service.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimez votre prestation ?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}">
-                            
-                            <button type="submit" class="btn btn-danger">
-                                Supprimer ce service
-                            </button>
-                        </form>
+                    <div class="author-info p-3 border rounded bg-light mb-4">
+                        <h5 class="mb-2">Proposé par :</h5>
+                        <p class="mb-3">
+                            <strong>{{ service.author.firstname }} {{ service.author.name }}</strong>
+                        </p>
+                        <p class="mb-3">
+                            <strong>Localisation :</strong> {{ service.author.postcode }} {{ service.author.town }}
+                        </p>
                         
+                       
+                        {% if app.user %}
+                            {% if app.user != service.author %}
+                                <a href="{{ path('app_service_contact', {'id': service.id}) }}" class="btn btn-primary">
+                                    <i class="fas fa-envelope"></i> Contacter le prestataire
+                                </a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{{ path('app_login') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-lock"></i> Connectez-vous pour contacter
+                            </a>
+                        {% endif %}
                     </div>
+
+                    
+                    {% if app.user == service.author %}
+                        <div class="d-flex justify-content-end gap-2">
+                            <twig:BootstrapButton 
+                                text="Modifier ce service"
+                                type="primary" 
+                                link="{{ path('app_service_update', {'id': service.id}) }}" 
+                            />
+                            <form method="post" action="{{ path('app_service_delete', {'id': service.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer votre prestation ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ service.id) }}">
+                                <button type="submit" class="btn btn-danger">
+                                    Supprimer ce service
+                                </button>
+                            </form>
+                        </div>
                     {% endif %}
                     
                 </div>
-                
             </div>
 
         </div>
