@@ -33,7 +33,8 @@ final class ServiceController extends AbstractController
     }
 
     /**
-     * @return Response La vue du formulaire de crétion d'un service
+     * Affiche le formulaire de création d'un service et traite la soumission.
+     * @return Response La vue du formulaire de création d'un service
      */
     #[Route('/create', name: 'create')]
     #[IsGranted('ROLE_USER')]
@@ -71,9 +72,10 @@ final class ServiceController extends AbstractController
     }
 
     /**
+     * Affiche un service en fonction de son id
      * @return Response La vue d'un service
      */
-    #[Route('/{id<\d+>}', name: 'show')]
+    #[Route('/{id<\d+>}', name: 'show')]    
     public function show(Service $service): Response
     {
         return $this->render('service/show.html.twig', [
@@ -81,15 +83,15 @@ final class ServiceController extends AbstractController
         ]);
     }
 
+    /**
+     * Affiche le formulaire de modification d'un service et traite la soumission.
+     * @return Response La vue du formulaire ou une redirection vers la fiche service.
+     */
     #[Route('/{id<\d+>}/update', name: 'update')]
+    #[IsGranted('ROLE_USER')]
+    #[IsGranted('SERVICE_EDIT', subject: 'service', message: "Droit insuffisant pour la modification")]
     public function update(Service $service, Request $request, EntityManagerInterface $entityManager): Response
     {
-        //on sécurise seul un admin ou l'auteur du service peut faire la modification
-       if ($service->getAuthor() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) { 
-           $this->addFlash('danger', "Vous n'avez pas le droit de modifier cette prestation.");
-           return $this->redirectToRoute('app_service_index');
-        }           
-        
         // On construit le formulaire à partir des données de l'entité récupérée
         // depuis l'ID présent dans l'URL
         $updateForm = $this->createForm(ServiceCreateFormType::class, $service);
@@ -118,6 +120,7 @@ final class ServiceController extends AbstractController
      */
     #[Route('/{id<\d+>}/delete', name: 'delete', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
+    #[IsGranted('SERVICE_DELETE', subject: 'service', message: "Droit insuffisant pour la modification")]
     public function delete(Request $request, Service $service, EntityManagerInterface $entityManager): Response
     {
         
