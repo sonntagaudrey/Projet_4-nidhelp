@@ -30,7 +30,7 @@ class Category
 
     public function __construct()
     {
-        $this->service = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int

@@ -14,18 +14,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * @author Audrey SONNTAG GOLINSKI
+ * Contrôleur gérant les opérations CRUD et les droits des utilisateurs.
+ * @todo  faire le Delete
+ */
+
 final class UserController extends AbstractController
-{
-    #[Route('/user', name: 'app_user')]
-    public function index(UserRepository $userRepository): Response
-    {
-        $arrUsers = $userRepository->findAll();
-
-        return $this->render('user/index.html.twig', [
-            'userList' => $arrUsers
-        ]);
-    }
-
+{ 
+    /**
+     * Affiche le formulaire de création d'un compte utilisateur et traite la soumission.
+     * @return Response La vue du formulaire de création d'un compte utilisateur
+     */
     #[Route('/user/create', name: 'app_user_create')]
     public function create(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -64,8 +64,9 @@ final class UserController extends AbstractController
             'userForm' => $userForm
         ]);
     }
-
-     /**
+    
+    /**
+     * Affiche un utilisateur en fonction de son id
      * @return Response La vue d'un user
      */
     #[Route('/{id<\d+>}', name: 'app_user_show')]
@@ -76,6 +77,10 @@ final class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * Affiche le formulaire de modification d'un compte utilisateur et traite la soumission.
+     * @return Response La vue du formulaire de modification d'un compte utilisateur
+     */
     #[Route('/user/{id<\d+>}', name: 'app_user_update')]
     public function update(User $user, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -87,7 +92,7 @@ final class UserController extends AbstractController
 
             $user->setUpdateDate(new DateTime('now'));
             $entityManager->flush();
-
+            
             $this->addFlash('success', "L'utilisateur a été modifié");
 
             return $this->redirectToRoute('app_dashboard');
@@ -97,6 +102,11 @@ final class UserController extends AbstractController
             'userForm' => $userForm
         ]);
     }
+
+    /**
+     * Affiche le formulaire de modification du rôle d'un utilisateur et traite la soumission.
+     * @return Response La vue du formulaire de modification du rôle utilisateur
+     */
 
     #[Route('/user/{id<\d+>}/roles', name: 'app_user_roles')]
     public function updateRoles(User $user, Request $request, EntityManagerInterface $entityManager): Response

@@ -28,13 +28,13 @@ final class ServiceController extends AbstractController
     public function index(ServiceRepository $serviceRepository, CategoryRepository $categoryRepository, Request $request): Response
     {
         $categoryId = $request->query->get('category');
-        $search=$request->query->get('search');
+        $search     = $request->query->get('search');
     
-        $arrServices = $serviceRepository->findAllFiltered($categoryId, $search);
-        $arrCategories= $categoryRepository->findAll();        
+        $arrServices    = $serviceRepository->findAllFiltered($categoryId, $search);
+        $arrCategories  = $categoryRepository->findAll();        
 
         return $this->render('service/index.html.twig', [
-            'serviceList' => $arrServices,
+            'serviceList'  => $arrServices,
             'categoryList' => $arrCategories,
         ]);
     }
@@ -49,7 +49,7 @@ final class ServiceController extends AbstractController
     {
         $objNewService = new Service();
 
-        $createForm = $this->createForm(ServiceCreateFormType::class, $objNewService);
+        $createForm    = $this->createForm(ServiceCreateFormType::class, $objNewService);
 
         // J'envoie les données de la requête au formulaire
         $createForm->handleRequest($request);
@@ -132,8 +132,10 @@ final class ServiceController extends AbstractController
     {
         
         if ($service->getAuthor() !== $this->getUser() && !$this->isGranted('ROLE_ADMIN')) {
+
             $this->addFlash('danger', "Vous n'avez pas le droit de supprimer ce service.");
             return $this->redirectToRoute('app_service_index');
+
         }
 
         $submittedToken = $request->getPayload()->get('_token');

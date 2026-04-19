@@ -25,48 +25,48 @@ class RegistrationFormType extends AbstractType
              ->add('name', TextType::class, [
                 'label' => 'Nom de famille',
                 'constraints' => [
-                    new NotBlank(['message' => 'Le nom est obligatoire']),
+                    new NotBlank(message: 'Le nom est obligatoire'),
                 ]
             ])
 
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom', 
                 'constraints' => [
-                    new NotBlank(['message' => 'Le prénom est obligatoire']),
+                    new NotBlank(message: 'Le prénom est obligatoire'),
                 ]
             ])         
 
             ->add('address', TextType::class, [
                 'label' => 'Adresse', 
                 'constraints' => [
-                    new NotBlank(['message' => 'L\'adresse est obligatoire']),
+                    new NotBlank(message: 'L\'adresse est obligatoire'),
                 ]
             ])
                 ->add('postcode', TextType::class, [
                 'label' => 'Code postal', 
                 'constraints' => [
-                    new NotBlank(['message' => 'Le code postal est obligatoire']),
+                    new NotBlank(message: 'Le code postal est obligatoire'),
                 ]
             ])
 
             ->add('town', TextType::class, [
                 'label' => 'Ville', 
                 'constraints' => [
-                    new NotBlank(['message' => 'La Ville est obligatoire']),
+                    new NotBlank(message: 'La Ville est obligatoire'),
                 ]
             ])
 
             ->add('phone', TextType::class, [
                 'label' => 'Téléphone', 
                 'constraints' => [
-                    new NotBlank(['message' => 'Le téléphone est obligatoire']),
+                    new NotBlank(message: 'Le téléphone est obligatoire'),
                 ]
             ])
             
             ->add('email',EmailType::class, [
                 'label' => 'Adresse e-mail', 
                 'constraints' => [
-                    new NotBlank(['message' => 'L\email est obligatoire']),
+                    new NotBlank(message: 'L\email est obligatoire'),
                 ]
             ])
 

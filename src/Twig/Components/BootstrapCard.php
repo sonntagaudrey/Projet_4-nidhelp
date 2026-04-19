@@ -18,17 +18,17 @@ final class BootstrapCard
      * Monte le composant dans le DOM
      * 
      * @param string $title Titre de la card
-     * @param string $img l'URL ou l'URI de la source de l'image
      * @param string $exercpt l'extrait de la card
+     * @param string $img l'URL ou l'URI de la source de l'image     
      * @param string $link l'URL ou l'URI du target du lien du bouton
      * @param string $label Texte affiché dans le bouton
      */
-    public function mount(string $name, string $img= "", string $description, array $actions = [], ?string $categoryName = null): void
+    public function mount(string $name, string $description, string $img= "", array $actions = [], ?string $categoryName = null): void
     {
-        $this->_strName    = $name;
-        $this->_strImg      = $img;
+        $this->_strName         = $name;
         $this->_strDescription  = $description;
-        $this->_arrActions  = $actions;
+        $this->_strImg          = $img;        
+        $this->_arrActions      = $actions;
         $this->_strCategoryName = $categoryName;
         
     }

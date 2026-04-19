@@ -18,10 +18,15 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 /**
  * @author Audrey SONNTAG GOLINSKI
  * Controller gérant l'affichage de la page catégorie + l'ajout d'un catégorie (uniquement si le rôle est administrateur).
+ * @todo faire le delete d'une catégorie
  */
 
 final class CategoryController extends AbstractController
 {
+    /**
+     * Affiche la liste des catégories
+     */
+
     #[Route('/category', name: 'app_category')]
     public function index(CategoryRepository $categoryRepository): Response
     {
@@ -31,6 +36,10 @@ final class CategoryController extends AbstractController
         ]);
     }
     
+    /**
+     * Affiche le formulaire de création d'une catégorie
+     *@return Response la vue du formulaire de création d'une catégorie
+     */
     #[Route('/category/create', name: 'app_category_create')]
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger,
@@ -42,19 +51,23 @@ final class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $pictureFile */
+            
             $pictureFile = $form->get('picture')->getData();
 
             if ($pictureFile) {
                 
                 $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
+                $safeFilename     = $slugger->slug($originalFilename);
+                $newFilename      = $safeFilename.'-'.uniqid().'.'.$pictureFile->guessExtension();
 
                 try {
+
                     $pictureFile->move($pictureDirectory, $newFilename);
+                    
                 } catch (FileException $exc) {
+
                     $this->addFlash('danger', 'Erreur lors du téléchargement.');
+
                     return $this->redirectToRoute('app_category_create');
                 }
             
@@ -73,6 +86,11 @@ final class CategoryController extends AbstractController
             'categoryForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * Affiche le formulaire de modification d'une catégorie
+     *@return Response la vue du formulaire de modification d'une catégorie
+     */
 
     #[Route('/category/update/{id}', name: 'app_category_update')]
     #[IsGranted('ROLE_ADMIN')]

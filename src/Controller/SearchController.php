@@ -22,9 +22,9 @@ final class SearchController extends AbstractController
         $results = $serviceRepository->findSearchInput($query);
 
         return $this->render('service/index.html.twig', [
-            'serviceList' => $results,
+            'serviceList'  => $results,
             'categoryList' => [], 
-            'search_term' => $query
+            'search_term'  => $query
         ]);
     }
 }

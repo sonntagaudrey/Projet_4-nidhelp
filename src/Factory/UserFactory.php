@@ -10,6 +10,8 @@ use Zenstruck\Foundry\Persistence\PersistentObjectFactory;
  */
 final class UserFactory extends PersistentObjectFactory
 {
+    public const DEFAULT_PASSWORD = "P@ssw0rd";
+
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -36,7 +38,7 @@ final class UserFactory extends PersistentObjectFactory
         return [
             'address' => self::faker()->text(25),
             'createDate' => \DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
-            'email' => self::faker()->text(25),
+            'email' => self::faker()->unique()->safeEmail(20),
             'firstname' => self::faker()->text(10),
             'isVerified' => self::faker()->boolean(),
             'name' => self::faker()->text(8),

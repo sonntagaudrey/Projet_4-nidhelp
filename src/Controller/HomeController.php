@@ -20,7 +20,7 @@ final class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig', [
             'lastServices' => $serviceRepository->findLastThree(),
-            'categories' => $categoryRepository->findAll(),
+            'categories'   => $categoryRepository->findAll(),
         ]);
     }
 }
