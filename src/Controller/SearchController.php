@@ -8,6 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * @author Audrey SONNTAG GOLINSKI
+ * Controller gérant l'affichage de la page "seach" résulats de recherche de l'utilisateur dans la barre de recherche du header.
+ * @return Response le résulat de la recherche
+ */
+
 final class SearchController extends AbstractController
 {
     #[Route('/search', name: 'app_search')]

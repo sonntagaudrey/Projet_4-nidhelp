@@ -22,7 +22,9 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 final class ServiceController extends AbstractController
 {
     /**
+     * Affiche toutes les services ou les services en fonction de leur catégorie
      * @return Response La vue avec tous les services 
+     * @todo changer l'url losrqu'on affiche une catégorie
      */
     #[Route('/index', name: 'index')]
     public function index(ServiceRepository $serviceRepository, CategoryRepository $categoryRepository, Request $request): Response
