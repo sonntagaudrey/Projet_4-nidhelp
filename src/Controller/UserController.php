@@ -147,5 +147,34 @@ final class UserController extends AbstractController
         ]);
     }
 
+    /**
+     * Supprime un utilisateur
+     * @return Response Redirection vers la liste des utilisateurs
+     */
+    #[Route('/user/{id<\d+>}/delete', name: 'app_user_delete', methods: ['POST'])]
+    public function delete(User $user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // On récupère le jeton CSRF envoyé dans le formulaire de suppression
+        $submittedToken = $request->getPayload()->get('_token');
+
+        // On vérifie si le jeton est valide (ID du jeton : 'delete' + ID de l'user)
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $submittedToken)) {
+            
+            // Sécurité supplémentaire : empêcher de se supprimer soi-même ?
+            if ($this->getUser() === $user) {
+                $this->addFlash('danger', "Vous ne pouvez pas supprimer votre propre compte.");
+                return $this->redirectToRoute('app_dashboard');
+            }
+
+            $entityManager->remove($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', "L'utilisateur a été supprimé avec succès.");
+        } else {
+            $this->addFlash('danger', "Le jeton de sécurité est invalide.");
+        }
+
+        return $this->redirectToRoute('app_dashboard');
+    }
 
 }
