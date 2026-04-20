@@ -37,7 +37,7 @@ final class ServiceVoter extends Voter
             case self::EDIT:
                 
             case self::DELETE:
-                return $subject->getCreatedby() === $user;
+                return $subject->getAuthor() === $user;
                 break;
             
 

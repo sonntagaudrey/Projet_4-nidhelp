@@ -4,14 +4,14 @@
 
 {% block body %}
 
-{# Accès à la page 404 en mode dev: https://localhost:8000/_error/404 #}
 
 <div class="text-center">
-    <h1>Zut ! Les hautes herbes sont bien vides ici...</h1>
+    <h1>Chantier en cours ou lien cassé !</h1>
 
-    <a class="btn btn-primary" href="{{ path('app_dashboard') }}">Retourner à l'accueil</a>
+    <a class="btn btn-primary me-2" href="{{ path('app_dashboard') }}">Retourner à mon espace</a>
+    <a class="btn btn-primary" href="{{ path('app_home') }}">Retourner à l'accueil</a>
 
-    <img class="w-100" src="{{ asset('images/404.png') }}" alt="page 404">
+    <img class="w-75 img-fluid" src="{{ asset('images/404.png') }}" alt="page 404">
 </div>
 
 {% endblock %}
